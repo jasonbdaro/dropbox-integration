@@ -5,6 +5,9 @@ import querystring from 'querystring'
 import { useState as useHookState } from '@hookstate/core'
 import { Persistence } from '@hookstate/persistence'
 import { useRouter } from 'next/router'
+import getConfig from 'next/config'
+
+const { serverRuntimeConfig } = getConfig()
 
 const Callback: NextPage = ({token}: any) => {
   const dropboxtoken: any = useHookState({})
@@ -24,13 +27,13 @@ const Callback: NextPage = ({token}: any) => {
 export default Callback
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { query, req } = context
+  const { query } = context
   const data = querystring.stringify({
     code: query?.code,
     grant_type: 'authorization_code',
     client_id: 'szxq8lfgp1itqwl',
     client_secret: 'yow6vyk6ptim4fn',
-    redirect_uri: `http://${req.headers.host}/callback`,
+    redirect_uri: `${serverRuntimeConfig.APP_URL}/callback`,
   })
   const gettoken: any = await axios.post('https://api.dropboxapi.com/oauth2/token', data, {
     headers: {
