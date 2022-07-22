@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
 import { useState, useEffect } from 'react'
 import { Dropbox } from 'dropbox'
-import { Loader2, CornerUpLeft } from 'lucide-react'
+import { Loader2, CornerUpLeft, Upload } from 'lucide-react'
 import ListGroup from 'react-bootstrap/ListGroup'
 import { Folder, File, DownloadCloud } from 'lucide-react'
 import { useState as useHookState } from '@hookstate/core'
@@ -115,6 +115,14 @@ const Download: NextPage = () => {
                   </>)}
                 </ListGroup.Item>
               ))}
+              {!list?.length && <>
+                <ListGroup.Item  className="cursor-pointer text-primary">
+                  <a target="blank" href="https://dropbox.com/home"><span className="me-1 fs-7"><Upload size={15} /> Upload files</span></a>
+                </ListGroup.Item>
+                <ListGroup.Item  className="cursor-pointer">
+                  <span className="me-1">No files found.</span>
+                </ListGroup.Item>
+              </>}
             </ListGroup>
           </>
         ) : (
